@@ -1,0 +1,24 @@
+@import "ress";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  color: #333132;
+}
+
+// h1 {
+//   font-size: 3.2rem;
+//   font-weight: bolder;
+//   text-align: center;
+// }
+// main > p {
+//   font-size: 1.2rem;
+//   text-align: center;
+// }

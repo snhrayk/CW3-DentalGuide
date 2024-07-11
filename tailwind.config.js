@@ -1,18 +1,27 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+
+    // Or if using `src` directory:
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
+      colors: {
+        base: "#F6F9FA",
+        main: "#45AAF5",
+        sub: "#F2F2F2",
+      },
+      boxShadow: {
+        "main-shadow": "0px 2px 8px 0px rgba(0, 0, 0, 0.10)",
+      },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "home-gradient": "linear-gradient(180deg, #F6F9FA 0%, #f2f2f2 100%)",
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
