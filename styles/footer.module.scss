@@ -51,7 +51,7 @@ $main: #45aaf5;
           transform: translateY(1.2dvh);
         }
       }
-      a {
+      .link {
         width: 100%;
         display: flex;
         justify-content: center;
@@ -105,12 +105,12 @@ $main: #45aaf5;
     // }
   }
   @each $index, $img in $icon-images {
-    .list:nth-child(#{$index}) > a > .icon {
+    .list:nth-child(#{$index}) > .link > .icon {
       background-image: url($img);
     }
   }
   @each $index, $img in $icon-selected-images {
-    .list:nth-child(#{$index}).active > a > .icon {
+    .list:nth-child(#{$index}).active > .link > .icon {
       background-image: url($img);
     }
   }
