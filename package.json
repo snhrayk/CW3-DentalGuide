@@ -14,7 +14,8 @@
     "react-dom": "^18",
     "react-router-dom": "^6.24.1",
     "ress": "^5.0.2",
-    "sass": "^1.77.6"
+    "sass": "^1.77.6",
+    "swiper": "^11.1.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",
