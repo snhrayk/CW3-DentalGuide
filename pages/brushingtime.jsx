@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Pagination } from "swiper/modules";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function BrushingTime() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -37,8 +37,11 @@ export default function BrushingTime() {
 
   return (
     <div className="w-full h-[100dvh] flex flex-col items-center">
-      <div className="w-full pt-[0.8rem] pl-[0.8rem]">
-        <button onClick={handleBackPage} className="w-[5.6rem] aspect-square">
+      <div className="w-full">
+        <button
+          onClick={handleBackPage}
+          className="w-[4.8rem] aspect-square pl-[0.8rem]"
+        >
           <Image src={back} alt="前の画面に戻る" />
         </button>
       </div>

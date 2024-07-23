@@ -13,6 +13,7 @@ module.exports = {
         baseColor: "#F6F9FA",
         main: "#45AAF5",
         sub: "#F2F2F2",
+        artist: "rgba(246, 249, 250, 0.60)",
       },
       boxShadow: {
         "main-shadow": "0px 2px 8px 0px rgba(0, 0, 0, 0.10)",
