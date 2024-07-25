@@ -8,17 +8,21 @@ import { useRouter } from "next/navigation";
 
 export default function BrushTeeth() {
   const router = useRouter();
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const handleBrushingTime = () => {
     router.push("/brushingtime");
   };
 
   const handleItemClick = (item) => {
-    setSelectedItem(item);
+    setSelectedItems((prevItems) =>
+      prevItems.includes(item)
+        ? prevItems.filter((i) => i !== item)
+        : [...prevItems, item]
+    );
   };
 
-  console.log("selectedItem", selectedItem);
+  console.log("selectedItems", selectedItems);
   return (
     <>
       <main className="w-full h-[88dvh] px-[1.6rem] pt-[4rem] flex flex-col items-center">
@@ -31,7 +35,7 @@ export default function BrushTeeth() {
           <li
             onClick={() => handleItemClick("weather")}
             className={`flex justify-between items-center py-[0.8rem] px-[1.6rem] rounded-[1.6rem] bg-baseColor transition-all duration-300 ${
-              selectedItem === "weather"
+              selectedItems.includes("weather")
                 ? "border border-3 border-main"
                 : "border-none"
             }`}
@@ -45,10 +49,10 @@ export default function BrushTeeth() {
           <li
             onClick={() => handleItemClick("music")}
             className={`flex justify-between items-center py-[0.8rem] px-[1.6rem] rounded-[1.6rem] bg-baseColor transition-all duration-300 ${
-              selectedItem === "music"
+              selectedItems.includes("music")
                 ? "border border-3 border-main"
                 : "border-none"
-            } border-main`}
+            }`}
           >
             <Image src={music} alt="音楽のイラスト" />
             <div className="flex flex-col items-center">
@@ -59,10 +63,10 @@ export default function BrushTeeth() {
           <li
             onClick={() => handleItemClick("news")}
             className={`flex justify-between items-center py-[0.8rem] px-[1.6rem] rounded-[1.6rem] bg-baseColor transition-all duration-300 ${
-              selectedItem === "news"
+              selectedItems.includes("news")
                 ? "border border-3 border-main"
                 : "border-none"
-            } border-main`}
+            }`}
           >
             <Image src={news} alt="ニュースのイラスト" />
             <div className="flex flex-col items-center">
