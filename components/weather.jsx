@@ -1,6 +1,39 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const weatherName = {
+  0: "快晴",
+  1: "ほぼ快晴",
+  2: "一部曇り",
+  3: "曇り",
+  45: "霧",
+  48: "着氷性霧",
+  51: "弱い霧雨",
+  53: "中程度の霧雨",
+  55: "濃い霧雨",
+  56: "弱い凍結霧雨",
+  57: "濃い凍結霧雨",
+  61: "弱い雨",
+  63: "中程度の雨",
+  65: "激しい雨",
+  66: "弱い凍結雨",
+  67: "激しい凍結雨",
+  71: "弱い雪",
+  73: "中程度の雪",
+  75: "激しい雪",
+  77: "雪粒",
+  80: "弱い雨のにわか雨",
+  81: "中程度の雨のにわか雨",
+  82: "激しい雨のにわか雨",
+  85: "弱い雪のにわか雪",
+  86: "激しい雪のにわか雪",
+  95: "雷雨",
+  96: "弱いひょうを伴う雷雨",
+  99: "激しいひょうを伴う雷雨",
+};
+
+const getWeatherName = (code) => weatherName[code] || "不明";
+
 const Weather = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -55,7 +88,9 @@ const Weather = () => {
             </p>
           </div>
           <div>
-            <p className="text-[2.4rem]">{currentWeather.weathercode}</p>
+            <p className="text-[2.4rem]">
+              {getWeatherName(currentWeather.weathercode)}
+            </p>
             <p className="flex text-[1.6rem] gap-x-[.4rem]">
               <span>
                 <svg
