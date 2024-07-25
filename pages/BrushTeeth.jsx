@@ -18,6 +18,7 @@ export default function BrushTeeth() {
     setSelectedItem(item);
   };
 
+  console.log("selectedItem", selectedItem);
   return (
     <>
       <main className="w-full h-[88dvh] px-[1.6rem] pt-[4rem] flex flex-col items-center">
@@ -29,9 +30,9 @@ export default function BrushTeeth() {
         <ul className="w-full flex flex-col gap-[1.6rem]">
           <li
             onClick={() => handleItemClick("weather")}
-            className={`flex justify-between items-center py-[0.8rem] px-[1.6rem] rounded-[1.6rem] cursor-pointer transition-all duration-300 ${
+            className={`flex justify-between items-center py-[0.8rem] px-[1.6rem] rounded-[1.6rem] bg-baseColor transition-all duration-300 ${
               selectedItem === "weather"
-                ? "border-3 border-main"
+                ? "border border-3 border-main"
                 : "border-none"
             }`}
           >
@@ -44,7 +45,9 @@ export default function BrushTeeth() {
           <li
             onClick={() => handleItemClick("music")}
             className={`flex justify-between items-center py-[0.8rem] px-[1.6rem] rounded-[1.6rem] bg-baseColor transition-all duration-300 ${
-              selectedItem === "music" ? "border-3 border-main" : "border-none"
+              selectedItem === "music"
+                ? "border border-3 border-main"
+                : "border-none"
             } border-main`}
           >
             <Image src={music} alt="音楽のイラスト" />
@@ -56,7 +59,9 @@ export default function BrushTeeth() {
           <li
             onClick={() => handleItemClick("news")}
             className={`flex justify-between items-center py-[0.8rem] px-[1.6rem] rounded-[1.6rem] bg-baseColor transition-all duration-300 ${
-              selectedItem === "news" ? "border-3 border-main" : "border-none"
+              selectedItem === "news"
+                ? "border border-3 border-main"
+                : "border-none"
             } border-main`}
           >
             <Image src={news} alt="ニュースのイラスト" />

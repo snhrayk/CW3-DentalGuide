@@ -13,12 +13,12 @@ $main: #45aaf5;
 
 .footer {
   width: 100%;
-  height: 12dvh;
-  background-color: $base;
+  height: 12vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .nav {
   width: 100%;
   height: 100%;
@@ -28,95 +28,87 @@ $main: #45aaf5;
   position: relative;
   background-color: $base;
   border-radius: 1.6rem 1.6rem 0 0;
+
   ul {
     width: 100%;
-    margin: 0 5%;
     display: flex;
     justify-content: space-between;
-    position: relative;
     .list {
       width: calc(100% / 3);
-      height: auto;
-      z-index: 1;
       list-style: none;
-      // border: 1px solid tomato;
+      z-index: 1;
+      text-align: center;
       &.active {
         .icon {
           width: 4rem;
           height: 4rem;
-          transform: translateY(-6dvh);
+          transform: translateY(-6vh);
         }
+
         .text {
           opacity: 1;
-          transform: translateY(1.2dvh);
+          transform: translateY(1.2vh);
         }
       }
+      &:nth-child(1).active > .link > .icon {
+        background-image: url("../public/img/home-selected.svg");
+      }
+
+      &:nth-child(2).active > .link > .icon {
+        background-image: url("../public/img/dental-selected.svg");
+      }
+
+      &:nth-child(3).active > .link > .icon {
+        background-image: url("../public/img/memory-selected.svg");
+      }
+
+      &:nth-child(1) > .link > .icon {
+        background-image: url("../public/img/home.svg");
+      }
+
+      &:nth-child(2) > .link > .icon {
+        background-image: url("../public/img/dental.svg");
+      }
+
+      &:nth-child(3) > .link > .icon {
+        background-image: url("../public/img/memory.svg");
+      }
+
       .link {
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        position: relative;
-        text-align: center;
         font-weight: bold;
+
         .icon {
           width: 3.2rem;
           height: 3.2rem;
-          display: block;
-          position: relative;
-          transition: 0.5s;
           background-size: cover;
           background-position: center;
+          transition: 0.5s;
         }
+
         .text {
           position: absolute;
+          color: $main;
           font-weight: 800;
           font-size: 1.2rem;
           letter-spacing: 0.05rem;
           opacity: 0;
           transition: 0.5s;
-          transform: translateY(-2dvh);
+          transform: translateY(-2vh);
         }
       }
     }
-    // .indicator {
-    //   width: calc(100% / 4);
-    //   position: absolute;
-    //   // top: -150%;
-    //   aspect-ratio: 1/1;
-    //   border-radius: 50%;
-    //   background-color: $base;
-    //   box-sizing: border-box;
-    //   border: 8px solid white;
-    //   transition: 0.5s;
-    //   // &::before,
-    //   // &::after {
-    //   //   content: "";
-    //   //   width: 1.6rem;
-    //   //   height: 1.6rem;
-    //   //   position: absolute;
-    //   //   top: 52%;
-    //   //   left: -28%;
-    //   //   background-color: transparent;
-    //   //   border-top-right-radius: 1.6rem;
-    //   //   box-shadow: 0 -1rem 0 0 white;
-    //   // }
-    // }
   }
-  @each $index, $img in $icon-images {
-    .list:nth-child(#{$index}) > .link > .icon {
-      background-image: url($img);
-    }
+
+  .indicator {
+    position: absolute;
+    top: -37%;
+    left: 0;
+    transition: 0.5s;
+    z-index: 0;
   }
-  @each $index, $img in $icon-selected-images {
-    .list:nth-child(#{$index}).active > .link > .icon {
-      background-image: url($img);
-    }
-  }
-  // @for $index from 1 through 3 {
-  //   .list:nth-child(#{$index}).active ~ .indicator {
-  //     transform: translateX(calc(100% * #{$index - 1}));
-  //   }
-  // }
 }

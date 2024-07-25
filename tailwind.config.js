@@ -18,8 +18,19 @@ module.exports = {
       boxShadow: {
         "main-shadow": "0px 2px 8px 0px rgba(0, 0, 0, 0.10)",
       },
+      dropShadow: {
+        "btn-shadow": "0px 1px 2px rgba(0, 0, 0, 0.25)",
+      },
       backgroundImage: {
+        graph: "linear-gradient(180deg, #45AAF5 0%, #3E9ADE 100%)",
         "home-gradient": "linear-gradient(180deg, #F6F9FA 0%, #f2f2f2 100%)",
+        "account-icon": "url('../public/img/butterfly.jpg')",
+      },
+      borderColor: {
+        "border-main": "#45AAF5",
+      },
+      backdropBlur: {
+        "btn-blur": "5px",
       },
     },
   },
