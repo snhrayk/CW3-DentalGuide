@@ -7,8 +7,6 @@ export default function Spotify() {
   const [tracks, setTracks] = useState([]);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [accessToken, setAccessToken] = useState("");
-  const requestRef = useRef();
-  const startRef = useRef();
   const playerRef = useRef(null);
 
   // Spotify APIからデータを取得

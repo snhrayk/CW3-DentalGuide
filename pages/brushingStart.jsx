@@ -12,6 +12,8 @@ export default function BrushingStart() {
   const router = useRouter();
   const [timeLeft, setTimeLeft] = useState(60);
   const [imageIndex, setImageIndex] = useState(0);
+  const requestRef = useRef();
+  const startRef = useRef();
 
   const handleBackPage = () => {
     router.push("/brushingtime");
@@ -21,7 +23,7 @@ export default function BrushingStart() {
   const images = [guideOne, guideTwo, guideThree];
 
   useEffect(() => {
-    const total = 30;
+    const total = 90;
     const circumference = 2 * Math.PI * 135;
     const circle = document.querySelector(".circle");
     const timerText = document.querySelector(".timerText");
