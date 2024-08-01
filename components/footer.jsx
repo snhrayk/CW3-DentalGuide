@@ -1,12 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import styles from "../styles/footer.module.scss";
-import Link from "next/link";
 
 export default function Footer() {
+  const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
 
+  useEffect(() => {
+    // 現在のパスに基づいてactiveIndexを設定
+    if (router.pathname === "/") {
+      setActiveIndex(0);
+    } else if (router.pathname === "/BrushTeeth") {
+      setActiveIndex(1);
+    } else if (router.pathname === "/Record") {
+      setActiveIndex(2);
+    }
+  }, [router.pathname]);
+
   const handleNavClick = (index) => {
-    setActiveIndex(index);
+    if (index === 0) {
+      router.push("/");
+    } else if (index === 1) {
+      router.push("/BrushTeeth");
+    } else if (index === 2) {
+      router.push("/Record");
+    }
   };
 
   return (
@@ -19,10 +37,8 @@ export default function Footer() {
             }`}
             onClick={() => handleNavClick(0)}
           >
-            <Link href="/" className={styles.link}>
-              <span className={styles.icon}></span>
-              <span className={styles.text}>ホーム</span>
-            </Link>
+            <span className={styles.icon}></span>
+            <span className={styles.text}>ホーム</span>
           </li>
           <li
             className={`${styles.list} ${
@@ -30,10 +46,8 @@ export default function Footer() {
             }`}
             onClick={() => handleNavClick(1)}
           >
-            <Link href="/BrushTeeth" className={styles.link}>
-              <span className={styles.icon}></span>
-              <span className={styles.text}>歯磨き</span>
-            </Link>
+            <span className={styles.icon}></span>
+            <span className={styles.text}>歯磨き</span>
           </li>
           <li
             className={`${styles.list} ${
@@ -41,15 +55,16 @@ export default function Footer() {
             }`}
             onClick={() => handleNavClick(2)}
           >
-            <Link href="/Record" className={styles.link}>
-              <span className={styles.icon}></span>
-              <span className={styles.text}>記録</span>
-            </Link>
+            <span className={styles.icon}></span>
+            <span className={styles.text}>記録</span>
           </li>
         </ul>
         <svg
           className={styles.indicator}
-          style={{ transform: `translateX(calc(100% * ${activeIndex}))` }}
+          style={{
+            left: `calc(100% / 3 * ${activeIndex})`,
+            transition: "left 0.3s ease",
+          }}
           width="calc(100% / 3)"
           height="72"
           viewBox="0 0 108 72"
