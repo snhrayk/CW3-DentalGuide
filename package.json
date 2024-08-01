@@ -19,6 +19,7 @@
     "swiper": "^11.1.5"
   },
   "devDependencies": {
+    "@types/spotify-web-playback-sdk": "^0.1.19",
     "autoprefixer": "^10.4.19",
     "daisyui": "^4.12.10",
     "dotenv": "^16.4.5",

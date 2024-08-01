@@ -3,9 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Script from "next/script";
 import Image from "next/image";
-import guideOne from "../public/img/guide1.svg";
-import guideTwo from "../public/img/guide2.svg";
-import guideThree from "../public/img/guide3.svg";
 import Weather from "@/components/weather";
 import Timer from "@/components/timer";
 

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import back from "../public/img/back.svg";
 import hold from "../public/img/ippan005.png";
@@ -15,7 +15,16 @@ import { useRouter } from "next/navigation";
 
 export default function BrushingTime() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [selectedItems, setSelectedItems] = useState([]);
   const router = useRouter();
+
+  useEffect(() => {
+    // localStorage から選択されたアイテムを取得
+    const storedItems = JSON.parse(
+      localStorage.getItem("selectedItems") || "[]"
+    );
+    setSelectedItems(storedItems);
+  }, []);
 
   const handleSlideChange = (swiper) => {
     setCurrentSlide(swiper.activeIndex);
@@ -34,6 +43,21 @@ export default function BrushingTime() {
     "毛先の角度を正しく保ちましょう",
     "磨きづらい場合は毛先を使って磨きましょう",
   ];
+
+  const getMessage = () => {
+    const weather = selectedItems.includes("weather");
+    const music = selectedItems.includes("music");
+    const news = selectedItems.includes("news");
+
+    if (weather && music && news) return "すべてが流れます";
+    if (weather && music) return "今回は天気と音楽が流れます";
+    if (music && news) return "今回は音楽とニュースが流れます";
+    if (weather && news) return "今回は天気とニュースが流れます";
+    if (weather) return "今回は天気が流れます";
+    if (music) return "今回は音楽が流れます";
+    if (news) return "今回はニュースが流れます";
+    return "選択されていません";
+  };
 
   return (
     <div className="w-full h-[100dvh] flex flex-col items-center">
@@ -55,7 +79,7 @@ export default function BrushingTime() {
           <br />
           できましたか？
         </h1>
-        <p className="text-[2.0rem] ">今回は天気と音楽が流れます</p>
+        <p className="text-[2.0rem]">{getMessage()}</p>
       </div>
       <Swiper
         pagination={true}

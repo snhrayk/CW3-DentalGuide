@@ -17,13 +17,31 @@ export default function Home() {
     return `${year}.${month}.${day} (${dayOfWeek})`;
   };
 
-  // const router = useRouter();
+  const today = new Date();
+  const formattedDate = formatDate(today);
+
   // const handleTrivia = () => {
   //   router.push("/trivia");
   // };
 
-  const today = new Date();
-  const formattedDate = formatDate(today);
+  const router = useRouter();
+
+  const handleLogin = () => {
+    const clientId = process.env.SPOTIFY_CLIENT_ID;
+    const redirectUri = process.env.SPOTIFY_REDIRECT_URI;
+    const scopes = [
+      "user-read-playback-state",
+      "user-modify-playback-state",
+      "user-read-currently-playing",
+      "playlist-read-private",
+    ].join(" ");
+
+    const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${clientId}&scope=${encodeURIComponent(
+      scopes
+    )}&redirect_uri=${encodeURIComponent(redirectUri)}`;
+
+    window.location.href = authUrl;
+  };
 
   return (
     <>
@@ -34,7 +52,10 @@ export default function Home() {
             {formattedDate.split(" ")[0]}
             <span className="text-[2.4rem]">{formattedDate.split(" ")[1]}</span>
           </h1>
-          <button className="w-[5.6rem] h-[5.6rem] rounded-[50%] bg-account-icon bg-cover"></button>
+          <button
+            onClick={handleLogin}
+            className="w-[5.6rem] h-[5.6rem] rounded-[50%] bg-account-icon bg-cover"
+          ></button>
         </div>
         {/* 持続日数 */}
         <div className="w-full h-auto py-[1.6rem] mb-[3.2rem] flex justify-evenly bg-home-gradient shadow-main-shadow rounded-[24px]">

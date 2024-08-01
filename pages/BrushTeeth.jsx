@@ -11,18 +11,28 @@ export default function BrushTeeth() {
   const [selectedItems, setSelectedItems] = useState([]);
 
   const handleBrushingTime = () => {
+    // 選択されたアイテムを localStorage に保存
+    localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
     router.push("/brushingtime");
   };
 
   const handleItemClick = (item) => {
-    setSelectedItems((prevItems) =>
-      prevItems.includes(item)
-        ? prevItems.filter((i) => i !== item)
-        : [...prevItems, item]
-    );
+    setSelectedItems((prevItems) => {
+      if (prevItems.includes(item)) {
+        // 既に選択されているアイテムを削除
+        return prevItems.filter((i) => i !== item);
+      } else {
+        // 新しいアイテムを追加する前に、現在の選択が2つ未満であることを確認
+        if (prevItems.length < 2) {
+          return [...prevItems, item];
+        }
+        return prevItems; // 2つ以上選択されている場合は変更なし
+      }
+    });
   };
 
   console.log("selectedItems", selectedItems);
+
   return (
     <>
       <main className="w-full h-[88dvh] px-[1.6rem] pt-[4rem] flex flex-col items-center">
@@ -34,9 +44,9 @@ export default function BrushTeeth() {
         <ul className="w-full flex flex-col gap-[1.6rem]">
           <li
             onClick={() => handleItemClick("weather")}
-            className={`flex justify-between items-center py-[0.8rem] px-[1.6rem] rounded-[1.6rem] bg-baseColor transition-all duration-300 ${
+            className={`flex justify-between items-center py-[0.8rem] px-[1.6rem] rounded-[1.6rem] bg-baseColor transition-transform duration-300 ease-in-out ${
               selectedItems.includes("weather")
-                ? "border border-3 border-main"
+                ? "border border-3 border-main scale-105"
                 : "border-none"
             }`}
           >
@@ -48,9 +58,9 @@ export default function BrushTeeth() {
           </li>
           <li
             onClick={() => handleItemClick("music")}
-            className={`flex justify-between items-center py-[0.8rem] px-[1.6rem] rounded-[1.6rem] bg-baseColor transition-all duration-300 ${
+            className={`flex justify-between items-center py-[0.8rem] px-[1.6rem] rounded-[1.6rem] bg-baseColor transition-transform duration-300 ease-in-out ${
               selectedItems.includes("music")
-                ? "border border-3 border-main"
+                ? "border border-3 border-main scale-105"
                 : "border-none"
             }`}
           >
@@ -62,9 +72,9 @@ export default function BrushTeeth() {
           </li>
           <li
             onClick={() => handleItemClick("news")}
-            className={`flex justify-between items-center py-[0.8rem] px-[1.6rem] rounded-[1.6rem] bg-baseColor transition-all duration-300 ${
+            className={`flex justify-between items-center py-[0.8rem] px-[1.6rem] rounded-[1.6rem] bg-baseColor transition-transform duration-300 ease-in-out ${
               selectedItems.includes("news")
-                ? "border border-3 border-main"
+                ? "border border-3 border-main scale-105"
                 : "border-none"
             }`}
           >

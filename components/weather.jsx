@@ -75,11 +75,6 @@ const Weather = () => {
   return (
     <>
       {currentWeather && dailyData && (
-        // <div>
-        //   <p>気温: {currentWeather.temperature}°C</p>
-        //   <p>天気: {currentWeather.weathercode}</p>
-        //   <p>降水確率: {dailyData.precipitation_probability_mean[0]}%</p>
-        // </div>
         <div className="flex items-center gap-x-[2.4rem]">
           <div>
             <p className="text-[5.6rem] font-bold">
