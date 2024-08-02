@@ -1,15 +1,14 @@
+import Head from "next/head";
 import Footer from "@/components/footer";
-import Image from "next/image";
-import React from "react";
-import test from "../public/img/test.png";
+import Calendar from "@/components/calendar";
 
-export default function Record() {
+export default function Home() {
   return (
-    <>
-      <main className="w-full h-[88dvh] px-[1.6rem] pt-[5rem]">
-        <Image src={test} alt="test" />
+    <div>
+      <main className="w-full h-[88dvh]">
+        <Calendar />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

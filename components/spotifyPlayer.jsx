@@ -1,87 +1,125 @@
 import { useEffect, useState } from "react";
 
 export default function SpotifyPlayer() {
-  const [trackInfo, setTrackInfo] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [tokenAvailable, setTokenAvailable] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("spotifyAccessToken");
-
     if (token) {
-      // SDKがロードされてから実行するためのチェック
-      const checkSDKLoaded = () => {
-        if (typeof window.Spotify === "undefined") {
-          console.error("Spotify Web Playback SDK is not loaded.");
-          return;
-        }
-
-        window.onSpotifyWebPlaybackSDKReady = () => {
-          const player = new window.Spotify.Player({
-            name: "Web Playback SDK",
-            getOAuthToken: (cb) => {
-              cb(token);
-            },
-          });
-
-          player.addListener("ready", ({ device_id }) => {
-            console.log("Ready with Device ID", device_id);
-
-            const playlistId = process.env.SPOTIFY_PLAYLIST_ID;
-
-            // プレイリストのトラックをランダムに再生
-            fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
-              headers: { Authorization: `Bearer ${token}` },
-            })
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error(
-                    `Error ${response.status}: ${response.statusText}`
-                  );
-                }
-                return response.json();
-              })
-              .then((data) => {
-                const tracks = data.items.map((item) => ({
-                  uri: item.track.uri,
-                  name: item.track.name,
-                  artist: item.track.artists[0].name,
-                  image: item.track.album.images[0].url,
-                }));
-
-                const randomTrack =
-                  tracks[Math.floor(Math.random() * tracks.length)];
-                player.play({ uris: [randomTrack.uri] });
-
-                // 現在のトラック情報を保存
-                setTrackInfo(randomTrack);
-              })
-              .catch((error) => {
-                console.error("Error fetching playlist tracks:", error);
-              });
-          });
-
-          player.connect();
-        };
-      };
-
-      checkSDKLoaded();
+      setTokenAvailable(true);
     }
   }, []);
 
+  useEffect(() => {
+    if (tokenAvailable) {
+      const loadSpotifySDK = () => {
+        const script = document.createElement("script");
+        script.src = "https://sdk.scdn.co/spotify-player.js";
+        script.async = true;
+        script.onload = () => {
+          if (typeof window !== "undefined") {
+            window.onSpotifyWebPlaybackSDKReady = () => {
+              const token = localStorage.getItem("spotifyAccessToken");
+              if (!token) {
+                console.error("No Spotify access token found");
+                return;
+              }
+
+              const player = new window.Spotify.Player({
+                name: "dental-guide",
+                getOAuthToken: (cb) => {
+                  cb(token);
+                },
+              });
+
+              // プレイヤーのイベントリスナーを設定
+              player.addListener("ready", ({ device_id }) => {
+                console.log("Player is ready");
+                localStorage.setItem("spotifyDeviceId", device_id);
+              });
+
+              player.addListener("not_ready", ({ device_id }) => {
+                console.log("Player is not ready");
+              });
+
+              player.connect();
+            };
+          }
+        };
+        script.onerror = (err) => {
+          console.error("Error loading Spotify SDK script:", err);
+        };
+        document.body.appendChild(script);
+      };
+
+      loadSpotifySDK();
+    }
+  }, [tokenAvailable]);
+
+  const playRandomTrack = async () => {
+    const deviceId = localStorage.getItem("spotifyDeviceId");
+    if (!deviceId) {
+      console.error("No Spotify device ID found");
+      return;
+    }
+
+    const response = await fetch(
+      `https://api.spotify.com/v1/playlists/${process.env.NEXT_PUBLIC_SPOTIFY_PLAYLIST_ID}/tracks`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("spotifyAccessToken")}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      console.error("Failed to fetch playlist tracks");
+      return;
+    }
+
+    const data = await response.json();
+    const tracks = data.items;
+    if (tracks.length === 0) {
+      console.error("No tracks found in the playlist");
+      return;
+    }
+
+    const randomTrack =
+      tracks[Math.floor(Math.random() * tracks.length)].track.uri;
+
+    const playResponse = await fetch(
+      `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          uris: [randomTrack],
+        }),
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("spotifyAccessToken")}`,
+        },
+      }
+    );
+
+    if (!playResponse.ok) {
+      console.error("Failed to play track");
+      return;
+    }
+
+    setIsPlaying(true);
+  };
+
   return (
-    <div className="p-4">
-      <div className="text-center text-xl font-bold mb-4">Spotify Player</div>
-      {trackInfo && (
-        <div className="flex items-center space-x-4">
-          <img
-            src={trackInfo.image}
-            alt={trackInfo.name}
-            className="w-24 h-24 rounded-lg shadow-lg"
-          />
-          <div className="flex flex-col justify-center">
-            <p className="text-lg font-semibold">{trackInfo.name}</p>
-            <p className="text-md text-gray-600">{trackInfo.artist}</p>
-          </div>
-        </div>
+    <div>
+      {tokenAvailable ? (
+        <button
+          onClick={playRandomTrack}
+          className="bg-green-500 text-white p-2 rounded"
+        >
+          {isPlaying ? "Playing" : "Play Random Track"}
+        </button>
+      ) : (
+        <p>Loading...</p>
       )}
     </div>
   );

@@ -1,23 +1,18 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import Script from "next/script";
-import Image from "next/image";
 import Weather from "@/components/weather";
 import Timer from "@/components/timer";
 
 export default function BrushingStart() {
   const router = useRouter();
-  const handleBackPage = () => {
-    router.push("/brushingtime");
-  };
-
   return (
     <>
-      <div className="w-full h-[26dvh] bg-gray-400 rounded-bl-[1.6rem] rounded-br-[1.6rem] shadow-main-shadow">
+      <div
+        className={`w-full h-[26dvh] rounded-bl-[1.6rem] rounded-br-[1.6rem] shadow-main-shadow overflow-hidden bg-main`}
+      >
         <div className="w-full h-auto flex items-center bg-artist backdrop-blur-btn-blur">
           <button
-            onClick={handleBackPage}
+            onClick={() => router.push("/brushingtime")}
             className="w-[4.8rem] aspect-square pl-[0.8rem]"
           >
             <svg
@@ -39,13 +34,10 @@ export default function BrushingStart() {
         <div className="w-full flex justify-evenly items-center py-[2.4rem]">
           {/* 音楽 */}
           {/* 天気 */}
-          <div className="w-[2/3] h-full text-baseColor">
-            <p className="text-[1.6rem] font-semibold ">大阪府大阪市</p>
-            <Weather />
-          </div>
+          <Weather />
         </div>
-        <Timer />
       </div>
+      <Timer />
     </>
   );
 }

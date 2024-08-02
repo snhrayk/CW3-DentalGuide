@@ -6,6 +6,7 @@ import present from "../public/img/present.svg";
 import trivia from "../public/img/trivia.svg";
 import settings from "../public/img/settings.svg";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const formatDate = (date) => {
@@ -20,15 +21,17 @@ export default function Home() {
   const today = new Date();
   const formattedDate = formatDate(today);
 
-  // const handleTrivia = () => {
-  //   router.push("/trivia");
-  // };
-
   const router = useRouter();
+  const handleTrivia = () => {
+    router.push("/trivia");
+  };
+  console.log("handleTrivia");
+
+  const [userInfo, setUserInfo] = useState(null);
 
   const handleLogin = () => {
-    const clientId = process.env.SPOTIFY_CLIENT_ID;
-    const redirectUri = process.env.SPOTIFY_REDIRECT_URI;
+    const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
+    const redirectUri = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
     const scopes = [
       "user-read-playback-state",
       "user-modify-playback-state",
@@ -43,6 +46,30 @@ export default function Home() {
     window.location.href = authUrl;
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem("spotifyAccessToken");
+      if (token) {
+        const response = await fetch("https://api.spotify.com/v1/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.status === 403) {
+          console.log("Forbidden: You do not have the necessary permissions.");
+        } else if (!response.ok) {
+          console.log("An error occurred:", response.statusText);
+        } else {
+          const data = await response.json();
+          setUserInfo(data);
+        }
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <main className="w-full h-[88dvh] px-[16px] pt-[16px]">
@@ -56,6 +83,11 @@ export default function Home() {
             onClick={handleLogin}
             className="w-[5.6rem] h-[5.6rem] rounded-[50%] bg-account-icon bg-cover"
           ></button>
+          {/* {userInfo && (
+            // <div>
+            //   <h1>Welcome, {userInfo.display_name}</h1>
+            // </div>
+          )} */}
         </div>
         {/* 持続日数 */}
         <div className="w-full h-auto py-[1.6rem] mb-[3.2rem] flex justify-evenly bg-home-gradient shadow-main-shadow rounded-[24px]">
@@ -139,7 +171,7 @@ export default function Home() {
               <p className="text-[1.6rem]">ご褒美</p>
             </button>
             <button
-              // onclick={handleTrivia}
+              onClick={handleTrivia}
               className="w-1/3 bg-baseColor py-[1.2rem] flex flex-col items-center rounded-[.8rem] drop-shadow-btn-shadow"
             >
               <Image src={trivia} alt="豆知識" width={48} height={48} />

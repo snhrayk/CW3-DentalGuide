@@ -3,8 +3,6 @@ module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-
-    // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
@@ -25,6 +23,11 @@ module.exports = {
         graph: "linear-gradient(180deg, #45AAF5 0%, #3E9ADE 100%)",
         "home-gradient": "linear-gradient(180deg, #F6F9FA 0%, #f2f2f2 100%)",
         "account-icon": "url('../public/img/butterfly.jpg')",
+        sunny: "url('../public/img/sunny.jpg')",
+        cloudy: "url('../public/img/cloudy.jpg')",
+        rain: "url('../public/img/rain.jpg')",
+        snow: "url('../public/img/snow.jpg')",
+        thunder: "url('../public/img/thunder.jpg')",
       },
       borderColor: {
         "border-main": "#45AAF5",
