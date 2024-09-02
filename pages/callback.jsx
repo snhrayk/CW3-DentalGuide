@@ -12,10 +12,13 @@ export default function Callback() {
       const token = params.get("access_token");
       if (token) {
         localStorage.setItem("spotifyAccessToken", token);
-        window.location.hash = "";
+        window.location.hash = ""; // ハッシュをクリア
+
+        // トークン取得後、ホームページにリダイレクト
+        router.push("/");
       }
     }
-  }, []);
+  }, [router]);
 
   return <div>Loading...</div>;
 }

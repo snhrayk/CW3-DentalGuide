@@ -30,8 +30,8 @@ export default function Home() {
   const [userInfo, setUserInfo] = useState(null);
 
   const handleLogin = () => {
-    const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
-    const redirectUri = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
+    const clientId = process.env.SPOTIFY_CLIENT_ID;
+    const redirectUri = process.env.SPOTIFY_REDIRECT_URI;
     const scopes = [
       "user-read-playback-state",
       "user-modify-playback-state",

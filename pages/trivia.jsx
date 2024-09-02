@@ -1,10 +1,11 @@
 import Footer from "@/components/footer";
+import SpotifyPlayer from "@/components/spotifyPlayer";
 import React from "react";
 
 export default function Trivia() {
   return (
     <>
-      <div className="w-full h-[88vh] flex flex-col">
+      {/* <div className="w-full h-[88vh] flex flex-col">
         <h1 className="text-[3.2rem] text-center pt-[.8rem]">豆知識</h1>
         <p className="text-[1.6rem] text-center pb-[.8rem]">
           ここでは今まで紹介した豆知識をまとめています
@@ -25,8 +26,9 @@ export default function Trivia() {
             </div>
           ))}
         </div>
-      </div>
-      <Footer />
+      </div> */}
+      <SpotifyPlayer />
+      {/* <Footer /> */}
     </>
   );
 }
