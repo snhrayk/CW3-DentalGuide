@@ -28,6 +28,10 @@ module.exports = {
         rain: "url('../public/img/rain.jpg')",
         snow: "url('../public/img/snow.jpg')",
         thunder: "url('../public/img/thunder.jpg')",
+        dental: "url('../public/img/dental.jpg')",
+        toothPaste: "url('../public/img/toothPaste.jpg')",
+        toothBrush: "url('../public/img/toothBrush.jpg')",
+        dentalFloss: "url('../public/img/dentalFloss.jpg')",
       },
       borderColor: {
         "border-main": "#45AAF5",

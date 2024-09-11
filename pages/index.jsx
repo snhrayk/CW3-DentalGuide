@@ -173,7 +173,7 @@ export default function Home() {
                 width={48}
                 height={48}
               />
-              <p className="text-[1.6rem]">予約</p>
+              <p className="text-[1.6rem]">歯科予約</p>
             </button>
             <button
               onClick={handleChart}
