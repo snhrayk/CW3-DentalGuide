@@ -22,10 +22,25 @@ export default function Home() {
   const formattedDate = formatDate(today);
 
   const router = useRouter();
+  const handleReserve = () => {
+    router.push("/reserve");
+  };
+
+  const handleChart = () => {
+    router.push("/chart");
+  };
+
+  const handleReward = () => {
+    router.push("/reward");
+  };
+
   const handleTrivia = () => {
     router.push("/trivia");
   };
-  console.log("handleTrivia");
+
+  const handleSettings = () => {
+    router.push("/settings");
+  };
 
   const [userInfo, setUserInfo] = useState(null);
 
@@ -148,7 +163,10 @@ export default function Home() {
         <div className="w-full mb-[2.4rem]">
           <h2 className="text-[1.6rem] mb-[.8rem]">歯医者メニュー</h2>
           <div className="flex gap-x-[1.6rem]">
-            <button className="w-1/2 bg-baseColor py-[1.2rem] flex flex-col items-center rounded-[.8rem] drop-shadow-btn-shadow">
+            <button
+              onClick={handleReserve}
+              className="w-1/2 bg-baseColor py-[1.2rem] flex flex-col items-center rounded-[.8rem] drop-shadow-btn-shadow"
+            >
               <Image
                 src={calender}
                 alt="カレンダーアイコン"
@@ -157,7 +175,10 @@ export default function Home() {
               />
               <p className="text-[1.6rem]">予約</p>
             </button>
-            <button className="w-1/2 bg-baseColor py-[1.2rem] flex flex-col items-center rounded-[.8rem] drop-shadow-btn-shadow">
+            <button
+              onClick={handleChart}
+              className="w-1/2 bg-baseColor py-[1.2rem] flex flex-col items-center rounded-[.8rem] drop-shadow-btn-shadow"
+            >
               <Image src={clinic} alt="クリニック" width={48} height={48} />
               <p className="text-[1.6rem]">診察履歴</p>
             </button>
@@ -166,7 +187,10 @@ export default function Home() {
         <div className="w-full">
           <h2 className="text-[1.6rem] mb-[.8rem]">その他メニュー</h2>
           <div className="flex gap-x-[1.6rem]">
-            <button className="w-1/3 bg-baseColor py-[1.2rem] flex flex-col items-center rounded-[.8rem] drop-shadow-btn-shadow">
+            <button
+              onClick={handleReward}
+              className="w-1/3 bg-baseColor py-[1.2rem] flex flex-col items-center rounded-[.8rem] drop-shadow-btn-shadow"
+            >
               <Image src={present} alt="プレゼント" width={48} height={48} />
               <p className="text-[1.6rem]">ご褒美</p>
             </button>
@@ -177,7 +201,10 @@ export default function Home() {
               <Image src={trivia} alt="豆知識" width={48} height={48} />
               <p className="text-[1.6rem]">豆知識</p>
             </button>
-            <button className="w-1/3 bg-baseColor py-[1.2rem] flex flex-col items-center rounded-[.8rem] drop-shadow-btn-shadow">
+            <button
+              onClick={handleSettings}
+              className="w-1/3 bg-baseColor py-[1.2rem] flex flex-col items-center rounded-[.8rem] drop-shadow-btn-shadow"
+            >
               <Image src={settings} alt="設定" width={48} height={48} />
               <p className="text-[1.6rem]">設定</p>
             </button>

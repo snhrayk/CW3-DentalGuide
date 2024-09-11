@@ -1,29 +1,4 @@
 // utils/spotify.js
-export const fetchDeviceId = async (token) => {
-  try {
-    if (!token) throw new Error("No token found");
-
-    const response = await fetch(
-      "https://api.spotify.com/v1/me/player/devices",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    if (!response.ok) throw new Error("Failed to fetch devices");
-
-    const data = await response.json();
-    const macbookDevice = data.devices.find((device) =>
-      device.name.includes("MacBook")
-    );
-    return macbookDevice ? macbookDevice.id : null;
-  } catch (error) {
-    console.error("Error fetching devices:", error);
-    return null;
-  }
-};
 
 export const fetchPlaylistTracks = async (token, playlistId) => {
   const response = await fetch(
@@ -43,8 +18,8 @@ export const fetchPlaylistTracks = async (token, playlistId) => {
   return data.items; // トラックのリストを返す
 };
 
-// デバイスIDを取得するためのSpotify Web Playback SDKの初期化
-export const initializeSpotifyPlayer = (token) => {
+// Spotify Web Playback SDKの初期化
+export const initializeSpotifyPlayer = (token, setDeviceId) => {
   window.onSpotifyWebPlaybackSDKReady = () => {
     const player = new Spotify.Player({
       name: "Web Playback SDK",
@@ -53,11 +28,33 @@ export const initializeSpotifyPlayer = (token) => {
       },
     });
 
+    // プレイヤーのリスナーを設定
     player.addListener("ready", ({ device_id }) => {
       console.log("Ready with Device ID", device_id);
-      // デバイスIDを保存または使用する
+      setDeviceId(device_id); // デバイスIDを保存
     });
 
-    player.connect();
+    player.addListener("initialization_error", ({ message }) => {
+      console.error("Failed to initialize", message);
+    });
+
+    player.addListener("authentication_error", ({ message }) => {
+      console.error("Failed to authenticate", message);
+    });
+
+    player.addListener("account_error", ({ message }) => {
+      console.error("Account issue", message);
+    });
+
+    player.addListener("playback_error", ({ message }) => {
+      console.error("Playback error", message);
+    });
+
+    player.connect(); // プレーヤーを接続
   };
+
+  // Spotify Web Playback SDKが読み込まれていない場合のエラーハンドリング
+  if (!window.Spotify) {
+    console.error("Spotify Web Playback SDK could not be loaded");
+  }
 };
