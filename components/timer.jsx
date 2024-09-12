@@ -25,7 +25,7 @@ export default function Timer() {
   ];
 
   useEffect(() => {
-    const total = 75;
+    const total = 30;
     const circumference = 2 * Math.PI * 135;
     const circle = document.querySelector(".circle");
     const timerText = document.querySelector(".timerText");
@@ -63,7 +63,7 @@ export default function Timer() {
     // 25秒ごとに画像を切り替える
     const imageChangeInterval = setInterval(() => {
       setImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 25000); // 25秒ごと
+    }, 10000); // 25秒ごと
 
     return () => {
       cancelAnimationFrame(requestRef.current);

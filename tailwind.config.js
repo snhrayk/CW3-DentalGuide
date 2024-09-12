@@ -32,6 +32,7 @@ module.exports = {
         toothPaste: "url('../public/img/toothPaste.jpg')",
         toothBrush: "url('../public/img/toothBrush.jpg')",
         dentalFloss: "url('../public/img/dentalFloss.jpg')",
+        smile: "url('../public/img/smile.jpg')",
       },
       borderColor: {
         "border-main": "#45AAF5",
